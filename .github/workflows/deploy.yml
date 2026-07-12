@@ -20,6 +20,15 @@ jobs:
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
+      - name: Diagnóstico temporal de secrets (no expone valores)
+        run: |
+          echo "Largo de AWS_ACCESS_KEY_ID: ${#AWS_ACCESS_KEY_ID}"
+          echo "Largo de AWS_SECRET_ACCESS_KEY: ${#AWS_SECRET_ACCESS_KEY}"
+          echo "Largo de AWS_SESSION_TOKEN: ${#AWS_SESSION_TOKEN}"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
 
       - name: Configurar credenciales AWS (Learner Lab)
         uses: aws-actions/configure-aws-credentials@v4
